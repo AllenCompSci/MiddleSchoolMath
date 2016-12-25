@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+
+    <title>Math Works Calender</title>
+
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+  
+      <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+
+
+
+
+<body>
+
+
+<script type = text/javascript>
+	var create = new Date();
+    function getName(){
+        var num = create.getMonth();
+        switch(num){
+            case 0: return "January";
+            case 1: return "February";
+            case 2: return "March";
+            case 3: return "April";
+            case 4: return "May";
+            case 5: return "June";
+            case 6: return "July";
+            case 7: return "August";
+            case 8: return "September";
+            case 9: return "October";
+            case 10: return "November";
+            case 11: return "December";
+        }
+    }
+
+	function GetOperator(randomNum){
+        this.value = randomNum;
+        this.op = "";
+        switch (randomNum){
+			case 0 : this.op = "+";
+			    break;
+			case 1 : this.op = "-";
+                break;
+			case 2 : this.op = "*";
+                break;
+			case 3 : this.op = "/";
+                break;
+			case 4 : this.op = "^";
+                break;
+        }
+    }
+
+
+    function getValue(num1, num2, num3, num4, op1, op2, op3) {
+        var hold1 = new GetOperator(op1.value);
+        var hold2 = new GetOperator(op2.value);
+        var hold3 = new GetOperator(op3.value);
+        var h1 =  num1;
+        var h2 =  num2;
+        var h3 =  num3;
+        var h4 =  num4;
+        if (hold1.value == hold2.value && hold1.value == hold3.value) {
+            switch (hold1.value) {
+                case 0 :
+                    h2 =  num1 +  num2 +  num3 +  num4;
+                    break;
+                case 1 :
+                    h2 =  num1 -  num2 -  num3 -  num4;
+                    break;
+                case 2 :
+                    h2 =  num1 *  num2 *  num3 *  num4;
+                    break;
+                case 3 :
+                    h2 =  num1 /  num2 /  num3 /  num4;
+                    break;
+                case 4 :
+                    h2 =  Math.pow(Math.pow(Math.pow( num1,  num2),  num3),  num4);
+                    break;
+            }
+        }
+
+        else {
+
+            for (var i = 4; i >= 0; i--) {
+                if (hold1.value == i) {
+                    h2 = useOP(h1, h2, i);
+                }
+                if (hold3.value == i) {
+                    h3 = useOP(h3, h4, i);
+                }
+                if (hold2.value == i) {
+                    h2 = useOP(h2, h3, i);
+                    h3 = h4;
+                    hold2.value = hold3.value;
+                    hold3.value = -1;
+                }
+            }
+
+        }
+
+
+        return  num1 + " " + op1.op + " " + num2 + " " + op2.op + " " + num3 + " " + op3.op + " " + num4 +  " = " + h2;
+    }
+    
+	function useOP(num1, num2, opVal){
+        switch(opVal) {
+            case 0 :
+                return num1 + num2;
+            case 1 :
+                return num1 - num2;
+            case 2 :
+                return num1 * num2;
+            case 3 :
+                return num1 / num2;
+            case 4 :
+                return Math.pow(num1, num2);
+        }
+    }
+    
+    var num1 = Math.floor((Math.random() * 9) + 1);
+    var num2 = Math.floor((Math.random() * 9) + 1);
+    var num3 = Math.floor((Math.random() * 9) + 1);
+    var num4 = Math.floor((Math.random() * 9) + 1);
+    var op1, op2, op3;
+    var count;
+    do {
+        count = 0;
+        op1 = new GetOperator(Math.floor(Math.random() * 5));
+        op2 = new GetOperator(Math.floor(Math.random() * 5));
+        op3 = new GetOperator(Math.floor(Math.random() * 5));
+        if (op1.value == 4)
+            count++;
+        if (op2.value == 4)
+            count++;
+        if (op3.value == 4)
+            count++;
+    }while(count >= 2);
+    var day = "" + create.getDate();
+    var month = getName();
+    var year =  create.getFullYear();
+    var DAY = create.getDay();
+    // DAY will be 0 - Sunday 1 - Monday 2 - Tuesday etc.
+
+    var List = getValue(num1, num2, num3, num4, op1, op2, op3);
+
+    var isLeap = false;
+    if(year % 4 == 0){
+        if(year % 100 == 0){
+            if(year % 400 == 0){
+                isLeap = true;
+            }
+        }
+        else{
+            isLeap = true;
+        }
+    }
+    var days = [31,28,31,30,31,30,31,31,30,31,30,31];
+    if(isLeap){
+        days[1] = 29;
+    }
+    var prevMonth = create.getDate();
+    /*
+    Needs to have some logic given the month
+
+     */
+    var SpecialDays = [];
+    var DayNumbersCal = [];
+    var currentMonth = create.getMonth();
+    var pastMonth = currentMonth-1;
+    if(pastMonth < 0){
+        pastMonth = 11;
+    }
+    var nextMonth = 1;
+
+    for(var i = 0; i < 42; i++){
+
+        if(i < days[currentMonth]+ prevMonth)
+        {
+            SpecialDays.push(false);
+            DayNumbersCal.push(i-prevMonth+1);
+        }
+        else{
+            SpecialDays.push(true);
+            if(i < prevMonth){
+                DayNumbersCal.push(days[pastMonth]-prevMonth-i);
+            }
+            else{
+                DayNumbersCal.push(nextMonth++);
+            }
+        }
+    }
+
+
+</script>
+
+	<div class="container">
+
+		<div class="calendar-container">
+
+			<header>
+				
+				<div class="day"><script>document.write(day)</script></div>
+				<div class="month"><script>document.write(month)</script></div>
+				<div class="problem"><script>document.write(List)</script></div>
+			</header>
+
+			<table class="calendar">
+				
+				<thead>
+
+					<tr>
+
+                        <td>Sun</td>
+						<td>Mon</td>
+						<td>Tue</td>
+						<td>Wed</td>
+						<td>Thu</td>
+						<td>Fri</td>
+						<td>Sat</td>
+
+					</tr>
+
+				</thead>
+
+				<tbody>
+
+					<tr>
+						<td class="prev-month">29</td>
+						<td class="prev-month">30</td>
+						<td class="prev-month">31</td>
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+						<td>4</td>
+					</tr>
+
+					<tr>
+						<td>5</td>
+						<td>6</td>
+						<td>7</td>
+						<td>8</td>
+						<td>9</td>
+						<td>10</td>
+						<td>11</td>
+					</tr>
+
+					<tr>
+						<td>12</td>
+						<td>13</td>
+						<td>14</td>
+						<td>15</td>
+						<td>16</td>
+						<td>17</td>
+						<td>18</td>
+					</tr>
+
+					<tr>
+						<td>19</td>
+						<td>20</td>
+						<td>21</td>
+						<td>22</td>
+						<td>23</td>
+						<td>24</td>
+						<td>25</td>
+					</tr>
+
+					<tr>
+						<td>26</td>
+						<td>27</td>
+						<td>28</td>
+						<td>29</td>
+						<td>30</td>
+						<td>31</td>
+						<td class="next-month">1</td>
+					</tr>
+
+				</tbody>
+
+			</table>
+
+			<div class="ring-left"></div>
+			<div class="ring-right"></div>
+
+		</div> <!-- end calendar-container -->
+
+	</div> <!-- end container -->
+	
+</body>
+
+  
+
+</html>
