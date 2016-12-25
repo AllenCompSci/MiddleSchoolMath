@@ -153,7 +153,7 @@
         if(year % 100 == 0){
             if(year % 400 == 0){
                 isLeap = true;
-            }
+           }
         }
         else{
             isLeap = true;
@@ -163,11 +163,11 @@
     if(isLeap){
         days[1] = 29;
     }
-    var prevMonth = create.getDate();
-    /*
-    Needs to have some logic given the month
-
-     */
+    var prevMonth = create.getDate() % 7;
+    console.log(prevMonth);
+    if(prevMonth > DAY){
+        prevMonth = prevMonth - DAY - 1;
+    }
     var SpecialDays = [];
     var DayNumbersCal = [];
     var currentMonth = create.getMonth();
@@ -176,18 +176,19 @@
         pastMonth = 11;
     }
     var nextMonth = 1;
-
     for(var i = 0; i < 42; i++){
 
-        if(i < days[currentMonth]+ prevMonth)
+        if(i > prevMonth && i <= (days[currentMonth]+ prevMonth))
         {
             SpecialDays.push(false);
-            DayNumbersCal.push(i-prevMonth+1);
+            DayNumbersCal.push(i-prevMonth);
         }
         else{
             SpecialDays.push(true);
-            if(i < prevMonth){
-                DayNumbersCal.push(days[pastMonth]-prevMonth-i);
+            if(i <= prevMonth){
+                DayNumbersCal.push(days[pastMonth]-prevMonth+i);
+                console.log(days[pastMonth]-prevMonth+i);
+
             }
             else{
                 DayNumbersCal.push(nextMonth++);
@@ -230,55 +231,67 @@
 				<tbody>
 
 					<tr>
-						<td class="prev-month">29</td>
-						<td class="prev-month">30</td>
-						<td class="prev-month">31</td>
-						<td>1</td>
-						<td>2</td>
-						<td>3</td>
-						<td>4</td>
+                        <td class="prev-month"><script>document.write(DayNumbersCal[0])</script></td>
+
+                        <td class="prev-month"><script>document.write(DayNumbersCal[1])</script></td>
+						<td class="prev-month"><script>document.write(DayNumbersCal[2])</script></td>
+						<td class="prev-month"><script>document.write(DayNumbersCal[3])</script></td>
+						<td><script>document.write(DayNumbersCal[4])</script></td>
+						<td><script>document.write(DayNumbersCal[5])</script></td>
+						<td><script>document.write(DayNumbersCal[6])</script></td>
 					</tr>
 
 					<tr>
-						<td>5</td>
-						<td>6</td>
-						<td>7</td>
-						<td>8</td>
-						<td>9</td>
-						<td>10</td>
-						<td>11</td>
+						<td><script>document.write(DayNumbersCal[7])</script></td>
+						<td><script>document.write(DayNumbersCal[8])</script></td>
+						<td><script>document.write(DayNumbersCal[9])</script></td>
+						<td><script>document.write(DayNumbersCal[10])</script></td>
+						<td><script>document.write(DayNumbersCal[11])</script></td>
+						<td><script>document.write(DayNumbersCal[12])</script></td>
+						<td><script>document.write(DayNumbersCal[13])</script></td>
 					</tr>
 
 					<tr>
-						<td>12</td>
-						<td>13</td>
-						<td>14</td>
-						<td>15</td>
-						<td>16</td>
-						<td>17</td>
-						<td>18</td>
+                        <td><script>document.write(DayNumbersCal[14])</script></td>
+                        <td><script>document.write(DayNumbersCal[15])</script></td>
+                        <td><script>document.write(DayNumbersCal[16])</script></td>
+                        <td><script>document.write(DayNumbersCal[17])</script></td>
+                        <td><script>document.write(DayNumbersCal[18])</script></td>
+                        <td><script>document.write(DayNumbersCal[19])</script></td>
+                        <td><script>document.write(DayNumbersCal[20])</script></td>
 					</tr>
 
 					<tr>
-						<td>19</td>
-						<td>20</td>
-						<td>21</td>
-						<td>22</td>
-						<td>23</td>
-						<td>24</td>
-						<td>25</td>
-					</tr>
+                        <td><script>document.write(DayNumbersCal[21])</script></td>
+                        <td><script>document.write(DayNumbersCal[22])</script></td>
+                        <td><script>document.write(DayNumbersCal[23])</script></td>
+                        <td><script>document.write(DayNumbersCal[24])</script></td>
+                        <td><script>document.write(DayNumbersCal[25])</script></td>
+                        <td><script>document.write(DayNumbersCal[26])</script></td>
+                        <td><script>document.write(DayNumbersCal[27])</script></td>
+
+                    </tr>
 
 					<tr>
-						<td>26</td>
-						<td>27</td>
-						<td>28</td>
-						<td>29</td>
-						<td>30</td>
-						<td>31</td>
-						<td class="next-month">1</td>
+                        <td><script>document.write(DayNumbersCal[28])</script></td>
+                        <td><script>document.write(DayNumbersCal[29])</script></td>
+                        <td><script>document.write(DayNumbersCal[30])</script></td>
+                        <td><script>document.write(DayNumbersCal[31])</script></td>
+                        <td><script>document.write(DayNumbersCal[32])</script></td>
+                        <td><script>document.write(DayNumbersCal[33])</script></td>
+                        <td><script>document.write(DayNumbersCal[34])</script></td>
 					</tr>
 
+                <tr>
+
+                    <td class="next-month"><script>document.write(DayNumbersCal[35])</script></td>
+                    <td class="next-month"><script>document.write(DayNumbersCal[36])</script></td>
+                    <td class="next-month"><script>document.write(DayNumbersCal[37])</script></td>
+                    <td class="next-month"><script>document.write(DayNumbersCal[38])</script></td>
+                    <td class="next-month"><script>document.write(DayNumbersCal[39])</script></td>
+                    <td class="next-month"><script>document.write(DayNumbersCal[40])</script></td>
+                    <td class="next-month"><script>document.write(DayNumbersCal[41])</script></td>
+                </tr>
 				</tbody>
 
 			</table>
